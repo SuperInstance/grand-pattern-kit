@@ -1,0 +1,8 @@
+[package]
+name = "grand-pattern-kit"
+version = "0.1.0"
+edition = "2021"
+description = "The composed Grand Pattern — modular primitives glued into a working cellular graph system"
+license = "MIT"
+
+[dependencies]
