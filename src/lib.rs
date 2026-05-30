@@ -31,8 +31,8 @@ impl Vibe {
         }
         let mut dims = [0.0; 16];
         for v in vibes {
-            for i in 0..16 {
-                dims[i] += v.dims[i];
+            for (d, v_d) in dims.iter_mut().zip(v.dims.iter()) {
+                *d += *v_d;
             }
         }
         let n = vibes.len() as f64;
@@ -388,18 +388,17 @@ impl<const D: usize> CellGraph<D> {
                                 room.update_vibe(val);
                             }
                         }
-                        SignalType::VibeShift => {
-                            if signal.payload.len() == 16 {
-                                let incoming = Vibe {
-                                    dims: {
-                                        let mut arr = [0.0; 16];
-                                        arr.copy_from_slice(&signal.payload[..16]);
-                                        arr
-                                    },
-                                };
-                                room.vibe.lerp_toward(&incoming, 0.05);
-                            }
+                        SignalType::VibeShift if signal.payload.len() == 16 => {
+                            let incoming = Vibe {
+                                dims: {
+                                    let mut arr = [0.0; 16];
+                                    arr.copy_from_slice(&signal.payload[..16]);
+                                    arr
+                                },
+                            };
+                            room.vibe.lerp_toward(&incoming, 0.05);
                         }
+                        SignalType::VibeShift => {}
                         SignalType::Anomaly => {
                             // Anomaly signals cause a vibe perturbation
                             for d in room.vibe.dims.iter_mut() {
