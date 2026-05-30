@@ -568,7 +568,7 @@ mod tests {
         let a = graph.add_room("a");
         let b = graph.add_room("b");
         graph.add_edge(&a, &b);
-        let vibe_a_before = graph.find_room(&a).unwrap().vibe.dims;
+        let _vibe_a_before = graph.find_room(&a).unwrap().vibe.dims;
 
         graph.tick();
         graph.gossip();
@@ -650,8 +650,8 @@ mod tests {
     #[test]
     fn test_detect_anomaly_finds_high_surprise_rooms() {
         let mut graph = make_graph();
-        let a = graph.add_room("a");
-        let b = graph.add_room("b");
+        let _a = graph.add_room("a");
+        let _b = graph.add_room("b");
         graph.tick();
 
         // Use a very low threshold to detect all rooms
